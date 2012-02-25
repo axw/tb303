@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>TB-303</title>
+    <script src="dojo/dojo.js" data-dojo-config="parseOnLoad: true"></script>
+    <link rel="stylesheet" href="dijit/themes/nihilo/nihilo.css" />
+    <style type="text/css">
+    html, body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        font-family: 'Helvetica', 'Arial'
+    }
+    #content {
+        width: 900px;
+        height: 500px;
+        left: 50%;
+        top: 50%;
+        position: absolute;
+        margin-left: -450px;
+        margin-top: -250px;
+    }
+    #heading {
+        height: 100px;
+        margin: 0;
+    }
+    #form {
+        border: 1px solid black;
+        margin: 0;
+        padding: 10px;
+        width: 100%;
+        height: 400px;
+    }
+    #numerals span {
+        margin-left: 5px;
+        font-family: 'Times'
+    }
+    #ab_cell {
+        margin: 0px;
+    }
+    #ab_cell div {
+        margin: 0;
+        width: 100%;
+        background-color: gray;
+        border: 1px solid white;
+        text-align: center;
+        color: white;
+    }
+    #pattern {
+        margin-top: 10px;
+        width: 100%;
+        font-size: 12px;
+        border-spacing: 0px;
+        border-collapse: collapse;
+    }
+    #pattern td {
+        border: 1px solid black;
+        width: 10px;
+        text-align: center;
+    }
+    .alt {
+        background-color: silver;
+    }
+    #efxnotes {
+        margin-top: 10px;
+    }
+    #footer {
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        bottom: 25px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    </style>
+</head>
+<body class="nihilo">
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.ComboButton");
+dojo.require("dijit.form.ToggleButton");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.FilteringSelect");
+dojo.require("dijit.form.ComboBox");
+dojo.require("dojo.store.Memory");
+</script>
+<div id="content">
+<div>
+    <img src="title.png" alt="Roland TB-303"/>
+</div>
+<form id="form">
+    <table>
+        <tr>
+            <td width="10%">
+                <label for="author">Author:</label>
+            </td>
+            <td width="60%">
+                <input type="text" id="author" name="author" value=""
+                    data-dojo-type="dijit.form.TextBox"
+                    data-dojo-props="trim:true"/>
+            </td>
+            <td id="numerals" width="30%" colspan="2">
+                <span>I</span>
+                <span>II</span>
+                <span>III</span>
+                <span>IV</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="title">Title:</label>
+            </td>
+            <td>
+                <input type="text" id="title" name="title" value=""
+                    data-dojo-type="dijit.form.TextBox"
+                    data-dojo-props="trim:true"/>
+            </td>
+            <td width="12%">
+            </td>
+            <td width="8%" id="ab_cell">
+                <div>A</div>
+                <div>B</div>
+            </td>
+        </tr>
+    </table>
+    <table id="pattern">
+        <tr id="column">
+            <td></td>
+            <td class="alt">1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td class="alt">5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td class="alt">9</td>
+            <td>10</td>
+            <td>11</td>
+            <td>12</td>
+            <td class="alt">13</td>
+            <td>14</td>
+            <td>15</td>
+            <td>16</td>
+        </tr>
+        <tr id="note">
+            <td>Note</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr id="downup">
+            <td>Down/Up</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr id="accentslide">
+            <td>Accent/Slide</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr id="symbol">
+            <td>&#x25CF; &#x25CB; &#x25AC;</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+    <div id="efxnotes">
+        <label for="textarea" style="font-size: 12px;">EFX/Notes:</label>
+        <textarea id="textarea" name="textarea"
+                  data-dojo-type="dijit.form.SimpleTextarea"
+                  style="width: 100%; height: 100px;"></textarea>
+    </div>
+
+    <table id="footer">
+        <tr>
+            <td>
+                <div><label for="waveform">Waveform</label></div>
+                <div style="height: 50px">
+                    <select name="waveform"
+                            data-dojo-type="dijit.form.Select"
+                            style="width: 100px; margin-top: 10px">
+                        <option value="Square">Square</option>
+                        <option value="Sawtooth">Sawtooth</option>
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div><label for="cutoff">Cut Off Freq</label></div>
+                <div id="cutoff_dial"></div>
+            </td>
+            <td>
+                <div><label for="resonance">Resonance</label></div>
+                <div id="resonance_dial"></div>
+            </td>
+            <td>
+                <div><label for="envmod">Env Mod</label></div>
+                <div id="envmod_dial"></div>
+            </td>
+            <td>
+                <div><label for="decay">Decay</label></div>
+                <div id="decay_dial"></div>
+            </td>
+            <td>
+                <div><label for="accent">Accent</label></div>
+                <div id="accent_dial"></div>
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+
+<script type="text/javascript">
+dojo.ready(function() {
+    var noteStore = new dojo.store.Memory({
+        data: [
+            {name: 'A',       id: 'A'},
+            {name: 'A\u266F', id: 'Asharp'},
+            {name: 'A\u266D', id: 'Aflat'},
+            {name: 'B',       id: 'B'},
+            {name: 'B\u266F', id: 'Bsharp'},
+            {name: 'B\u266D', id: 'Bflat'},
+            {name: 'C',       id: 'C'},
+            {name: 'C\u266F', id: 'Csharp'},
+            {name: 'C\u266D', id: 'Cflat'},
+            {name: 'D',       id: 'D'},
+            {name: 'D\u266F', id: 'Dsharp'},
+            {name: 'D\u266D', id: 'Dflat'},
+            {name: 'E',       id: 'E'},
+            {name: 'E\u266F', id: 'Esharp'},
+            {name: 'E\u266D', id: 'Eflat'},
+            {name: 'F',       id: 'F'},
+            {name: 'F\u266F', id: 'Fsharp'},
+            {name: 'F\u266D', id: 'Fflat'}
+        ]
+    });
+
+    var note_row = dojo.byId("note");
+    for (var i = 1; i < note_row.children.length; i++) {
+        var select = new dijit.form.ComboBox({
+            store: noteStore,
+            searchAttr: 'name',
+            style: 'width: 40px'
+        });
+        note_row.children[i].appendChild(select.domNode);
+    }
+
+    var downup_row = dojo.byId("downup");
+    for (var i = 1; i < downup_row.children.length; i++) {
+        var select = new dijit.form.FilteringSelect({
+            required: false,
+            store: new dojo.store.Memory({
+                data: [
+                    {name: 'D', id: 'D'},
+                    {name: 'U', id: 'U'},
+                ]
+            }),
+            searchAttr: 'name',
+            style: 'width: 40px'
+        });
+        downup_row.children[i].appendChild(select.domNode);
+    }
+
+    var accentslide_row = dojo.byId("accentslide");
+    for (var i = 1; i < accentslide_row.children.length; i++) {
+        var select = new dijit.form.FilteringSelect({
+            required: false,
+            store: new dojo.store.Memory({
+                data: [
+                    {name: 'A', id: 'A'},
+                    {name: 'S', id: 'S'},
+                    {name: 'AS', id: 'AS'},
+                ]
+            }),
+            searchAttr: 'name',
+            style: 'width: 40px'
+        });
+        accentslide_row.children[i].appendChild(select.domNode);
+    }
+
+    var symbol_row = dojo.byId("symbol");
+    for (var i = 1; i < symbol_row.children.length; i++) {
+        var select = new dijit.form.FilteringSelect({
+            required: false,
+            store: new dojo.store.Memory({
+                data: [
+                    {name: '\u25CF', id: 'solid_circle'},
+                    {name: '\u25CB', id: 'empty_circle'},
+                    {name: '\u25AC', id: 'dash'},
+                ]
+            }),
+            searchAttr: 'name',
+            style: 'width: 40px'
+        });
+        symbol_row.children[i].appendChild(select.domNode);
+    }
+});
+</script>
+
+<script type="text/javascript">
+    function drawDial(surface, gfx) {
+        var group = surface.createGroup();
+
+        var circle = group.createCircle({
+            cx: 25, cy: 25, r: 20
+        }).setStroke({color: 'black', width: 2});
+
+        group.createCircle({
+            cx: 25, cy: 25, r: 13
+        }).setStroke({color: 'black', width: 1})
+          .setFill('#DDD');
+
+        // Ticks
+        var ticks = [];
+        for (var i = 0; i < 5; i++) {
+            var tick1 = group.createLine({
+                x1: 25, y1: 5, x2: 25, y2: 0
+            }).setStroke({color: 'black', width: 1})
+              .applyTransform(gfx.matrix.rotategAt((i+1)*30, 25, 25));
+            var tick2 = group.createLine({
+                x1: 25, y1: 5, x2: 25, y2: 0
+            }).setStroke({color: 'black', width: 1})
+              .applyTransform(gfx.matrix.rotategAt((-i-1)*30, 25, 25));
+            ticks.push(tick1);
+            ticks.push(tick2);
+        }
+
+        // Pointer
+        var pointer = group.createLine({
+            x1: 25, y1: 5, x2: 25, y2: 0
+        }).setStroke({color: 'black', width: 3});
+        new gfx.Moveable(pointer, {mover: PerimeterMover});
+
+/*
+        group.connect("onclick", function(e) {
+            gfx.fx.animateTransform({
+                duration: 700,
+                shape: group,
+                transform: [{
+                    name: "scale",
+                    start: [1, 1],
+                    end: [2, 2]
+                }]
+            }).play();
+        });
+*/
+    }
+
+    require(["dojox/gfx", "dojox/gfx/Moveable", "dojox/gfx/Mover",
+             "dojox/gfx/fx", "dojo/domReady!"], function(gfx)
+    {
+        // With help from: http://www.aa3sd.net/using_dojo/draw_rectangle.html
+        dojo.declare("PerimeterMover", gfx.Mover, {
+            onMouseMove: function(event) {
+                var origin = dojo.coords(this.shape.parent.rawNode, true);
+                origin.y += 20;
+                var x = event.clientX - origin.x - 25;
+                var y = -(event.clientY - origin.y);
+                var angle = Math.PI/2 - Math.atan(y / Math.abs(x));
+                if (x < 0) angle *= -1;
+                this.shape.setTransform(gfx.matrix.rotateAt(angle, 25, 25));
+            }
+        });
+
+        var cutoff = gfx.createSurface("cutoff_dial", 50, 50);
+        var resonance = gfx.createSurface("resonance_dial", 50, 50);
+        var envmod = gfx.createSurface("envmod_dial", 50, 50);
+        var decay = gfx.createSurface("decay_dial", 50, 50);
+        var accent = gfx.createSurface("accent_dial", 50, 50);
+        drawDial(cutoff, gfx);
+        drawDial(resonance, gfx);
+        drawDial(envmod, gfx);
+        drawDial(decay, gfx);
+        drawDial(accent, gfx);
+    });
+</script>
+
+</body>
+</html>
+
